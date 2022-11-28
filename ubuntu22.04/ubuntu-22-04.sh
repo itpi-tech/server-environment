@@ -99,11 +99,11 @@ sudo tee /etc/apache2/sites-available/000-default.conf << EOF
         <FilesMatch \.php$>
             # Port 9000 = PHP5.6-FPM
             # Port 9001 = PHP7.4-FPM
-            SetHandler "proxy:fcgi://127.0.0.1:9000" #Default use php5.6-fpm
+            SetHandler "proxy:fcgi://127.0.0.1:9000"
         </FilesMatch>
 
-        ErrorLog ${APACHE_LOG_DIR}/error.log
-        CustomLog ${APACHE_LOG_DIR}/access.log combined
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
@@ -114,7 +114,11 @@ sudo sed -i 's+listen = /run/php/php7.4-fpm.sock+listen = 9001+g' /etc/php/7.4/f
 sudo sed -i 's+listen = /run/php/php5.6-fpm.sock+listen = 9000+g' /etc/php/5.6/fpm/pool.d/www.conf
 
 
-sudo rm -f /var/www/html/index.html && echo "<?php phpinfo();" >> /var/www/html/index.php
+sudo rm -f /var/www/html/index.html && touch /var/www/html/index.php
+sudo tee /var/www/html/index.php << EOF 
+<?php phpinfo();
+EOF
+
 sudo apachectl configtest
 sudo service php5.6-fpm restart
 sudo service php7.4-fpm restart
@@ -139,4 +143,4 @@ sudo apt install supervisor -y
 
 echo "Install memcached"
 echo "=================================================="
-sudo apt install memcached libmemcached-tools
+sudo apt install memcached libmemcached-tools -y
