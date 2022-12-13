@@ -1,8 +1,6 @@
 echo 'Installing Please Wait'
 echo "=================================================="
 echo 'Setup Installer'
-Install NPM
-==================================================
 sudo yum install epel-release -y
 sudo yum install deltarpm -y
 sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
