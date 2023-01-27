@@ -2,6 +2,7 @@ echo 'Installing Please Wait'
 echo "=================================================="
 echo 'Setup Installer'
 sudo yum install epel-release -y
+sudo yum groupinstall "Development Tools"
 sudo yum install deltarpm -y
 sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
 
