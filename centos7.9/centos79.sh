@@ -4,7 +4,7 @@ echo 'Setup Installer'
 sudo yum install epel-release -y
 
 sudo yum groupinstall "Development Tools"
-sudo yum install zlib-devel readline-devel -y
+sudo yum install zlib-devel readline-devel nano -y
 sudo yum install deltarpm -y
 sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
 
@@ -14,6 +14,20 @@ cd /opt/
 sudo wget https://ftp.postgresql.org/pub/source/v9.6.24/postgresql-9.6.24.tar.gz
 sudo tar -xvzf postgresql-9.6.24.tar.gz
 cd postgresql-9.6.24
+sudo ./configure --prefix=/var/lib/postgresql-9.6.24
+sudo make
+sudo make install
+sudo useradd postgres
+sudo passwd postgres
+sudo mkdir /var/lib/pgsql
+sudo mkdir /var/log/pglog
+sudo chown -R postgres /var/lib/pgsql
+sudo chown -R postgres /var/log/pglog
+sudo echo 'export PATH=$PATH:/var/lib/postgresql-9.6.24/bin' > /etc/profile.d/postgres.sh
+
+sudo su postgres
+initdb -D /var/lib/pgsql/ -U postgres -W
+pg_ctl -D /var/lib/pgsql/ -l /var/log/pglog/start.log start
 # TODO: Can't install NPM latest version
 sudo curl -sL https://rpm.nodesource.com/setup_lts.x | sudo bash -
 
