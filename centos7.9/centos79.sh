@@ -2,12 +2,18 @@ echo 'Installing Please Wait'
 echo "=================================================="
 echo 'Setup Installer'
 sudo yum install epel-release -y
+
 sudo yum groupinstall "Development Tools"
+sudo yum install zlib-devel readline-devel -y
 sudo yum install deltarpm -y
 sudo yum install http://rpms.remirepo.net/enterprise/remi-release-7.rpm -y
 
 # TODO: Can't install postgres 9.6
-sudo yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm -y
+# sudo yum install https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm -y
+cd /opt/ 
+sudo wget https://ftp.postgresql.org/pub/source/v9.6.24/postgresql-9.6.24.tar.gz
+sudo tar -xvzf postgresql-9.6.24.tar.gz
+cd postgresql-9.6.24
 # TODO: Can't install NPM latest version
 sudo curl -sL https://rpm.nodesource.com/setup_lts.x | sudo bash -
 
